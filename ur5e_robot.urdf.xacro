@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="ur5e" >
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find ur_robot)/urdf/common.gazebo.xacro" />
+
+  <!-- ur5e -->
+  <xacro:include filename="$(find ur_robot)/urdf/ur5e.urdf.xacro" />
+
+  <!-- Include EGH Gripper -->
+  <xacro:include filename="$(find ur_robot)/urdf/egh_gripper.urdf.xacro" />
+  <!-- arm -->
+  <xacro:ur5e_robot prefix="" joint_limited="true"/>
+
+  <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link = "base_link" />
+    <origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
+  </joint>
+  
+  <!-- Schunk EGH -->
+  
+  <xacro:egh_gripper prefix="egh_gripper" parent="tool0">
+  
+      <!--<origin xyz="5.0 5.0 5.0" rpy="0 0 ${pi/2}"/>-->
+  
+  </xacro:egh_gripper>
+  <gazebo reference="world">
+    <material>Gazebo/White</material>
+    <static>true</static>
+  </gazebo>
+</robot>
